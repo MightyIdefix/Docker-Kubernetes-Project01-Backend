@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: backend-grp11
+  namespace: swtdisp-grp11
+  labels:
+    app: backend-grp11
+spec:
+  replicas: 1
+  selector: 
+    matchLabels: 
+      app: backend-grp11
+  template: 
+    metadata: 
+      namespace: swtdisp-grp11
+      labels: 
+        app: backend-grp11
+    spec: 
+      containers:
+        - name: backend-grp11      
+          image: "docker.io/mrchingy/dispbackend:latest"
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backendservice-grp11
+  namespace: swtdisp-grp11
+spec: 
+  selector: 
+    app: backend-grp11
+  ports:
+    - port: 80
+      targetPort: 80
+  type: LoadBalancer
